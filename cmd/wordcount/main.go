@@ -13,10 +13,11 @@ func main() {
 	showWords := flag.Bool("words", false, "count words")
 	showBytes := flag.Bool("bytes", false, "count bytes")
 	showChars := flag.Bool("chars", false, "count Unicode characters")
+	showLongest := flag.Bool("longest", false, "length of the longest line in Unicode characters")
 	flag.Parse()
 
 	if flag.NArg() != 1 {
-		fmt.Fprintln(os.Stderr, "usage: wordcount [--lines|--words|--bytes|--chars] <file>")
+		fmt.Fprintln(os.Stderr, "usage: wordcount [--lines|--words|--bytes|--chars|--longest] <file>")
 		os.Exit(2)
 	}
 
@@ -34,8 +35,11 @@ func main() {
 	if *showChars {
 		selected++
 	}
+	if *showLongest {
+		selected++
+	}
 	if selected != 1 {
-		fmt.Fprintln(os.Stderr, "error: specify exactly one of --lines, --words, --bytes, --chars")
+		fmt.Fprintln(os.Stderr, "error: specify exactly one of --lines, --words, --bytes, --chars, --longest")
 		os.Exit(2)
 	}
 
@@ -52,6 +56,8 @@ func main() {
 		value, err = stats.CountBytes(path)
 	case *showChars:
 		value, err = stats.CountChars(path)
+	case *showLongest:
+		value, err = stats.LongestLine(path)
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "wordcount: %v\n", err)

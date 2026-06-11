@@ -1,6 +1,6 @@
 # wordcount
 
-Small CLI to count lines, words, bytes, and Unicode characters in a text file.
+Small CLI to count lines, words, bytes, Unicode characters, and the longest line in a text file.
 
 ## Requirements
 
@@ -21,16 +21,19 @@ Exactly one mode flag is required:
 ./wordcount --words sample.txt
 ./wordcount --bytes sample.txt
 ./wordcount --chars sample.txt
+./wordcount --longest sample.txt
 ```
+
+The `--longest` flag prints the length of the longest line in Unicode code points (not bytes).
 
 Example:
 
 ```bash
-$ echo -e "hello\nworld" > sample.txt
-$ ./wordcount --lines sample.txt
-2
-$ ./wordcount --words sample.txt
-2
+$ cat sample.txt
+hello
+world wide
+$ ./wordcount --longest sample.txt
+10
 ```
 
 ## Tests
